@@ -1,38 +1,46 @@
-import React, { useState, FormEvent, useContext } from 'react';
+import React, { useState, FormEvent, useContext, useEffect } from 'react';
 import { Segment, Form, Button } from 'semantic-ui-react';
 import { IActivity } from '../../../app/models/activity';
 import { observer } from 'mobx-react-lite';
 import ActivityStore from '../../../app/stores/activityStore';
+import { RouteComponentProps } from 'react-router-dom';
 
-interface IProps {
-  activity: IActivity | undefined;
+interface IParams {
+  id: string;
 }
-export const ActivityForm: React.FC<IProps> = props => {
+export const ActivityForm: React.FC<RouteComponentProps<IParams>> = ({
+  match,
+  history
+}) => {
   const activityStore = useContext(ActivityStore);
   const {
     createActivity: create,
     editActivity: edit,
     submitting,
-    cancelFormOpen
+    activity,
+    loadActivity,
+    clearActivity
   } = activityStore;
-  const { activity } = props;
-  const intializeForm = (): IActivity => {
-    if (activity) {
-      return activity;
-    } else {
-      return {
-        id: 0,
-        title: '',
-        description: '',
-        category: '',
-        date: '',
-        city: '',
-        venue: ''
-      };
-    }
-  };
 
-  const [sactivity, setActivity] = useState<IActivity>(intializeForm);
+  useEffect(() => {
+    const { id } = match.params;
+    if (id && activity && activity.id > 0) {
+      loadActivity(parseInt(id)).then(() => activity && setActivity(activity));
+    }
+    return () => {
+      clearActivity();
+    };
+  }, [loadActivity, clearActivity, match.params, activity]);
+
+  const [sactivity, setActivity] = useState<IActivity>({
+    id: 0,
+    title: '',
+    description: '',
+    category: '',
+    date: '',
+    city: '',
+    venue: ''
+  });
   const { id, title, description, category, date, city, venue } = sactivity;
   const handleInputChange = (
     event: FormEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -42,7 +50,11 @@ export const ActivityForm: React.FC<IProps> = props => {
   };
   const handleSubmit = () => {
     //console.log(sactivity);
-    id > 0 ? edit(sactivity) : create(sactivity);
+    id > 0
+      ? edit(sactivity).then(() => history.push(`/activities/${sactivity.id}`))
+      : create(sactivity).then(() =>
+          history.push(`/activities/${sactivity.id}`)
+        );
   };
   return (
     <Segment clearing>
@@ -93,7 +105,7 @@ export const ActivityForm: React.FC<IProps> = props => {
           content="Submit"
         />
         <Button
-          onClick={cancelFormOpen}
+          onClick={() => history.push('/activities')}
           floated="right"
           type="button"
           content="Cancel"
