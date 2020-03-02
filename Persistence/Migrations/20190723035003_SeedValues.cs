@@ -9,17 +9,17 @@ namespace Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Values",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "value 101" });
+                values: new object[] { 1, "Value 101" });
 
             migrationBuilder.InsertData(
                 table: "Values",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 2, "value 102" });
+                values: new object[] { 2, "Value 102" });
 
             migrationBuilder.InsertData(
                 table: "Values",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 3, "value 103" });
+                values: new object[] { 3, "Value 103" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

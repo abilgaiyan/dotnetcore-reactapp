@@ -8,23 +8,21 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200210143817_SeedValues")]
+    [Migration("20190723035003_SeedValues")]
     partial class SeedValues
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1");
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
 
             modelBuilder.Entity("Domain.Value", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -34,17 +32,17 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "value 101"
+                            Name = "Value 101"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "value 102"
+                            Name = "Value 102"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "value 103"
+                            Name = "Value 103"
                         });
                 });
 #pragma warning restore 612, 618

@@ -3,19 +3,15 @@ import { Menu, Container, Button } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 import { NavLink } from 'react-router-dom';
 
-export const NavBar: React.FC = () => {
+const NavBar: React.FC = () => {
   return (
     <Menu fixed="top" inverted>
       <Container>
         <Menu.Item header as={NavLink} exact to="/">
-          <img
-            src="/assets/logo.png"
-            alt="logo"
-            style={{ marginRight: '10px' }}
-          />
-          My Activities
+          <img src="/assets/logo.png" alt="logo" style={{ marginRight: 10 }} />
+          My React App
         </Menu.Item>
-        <Menu.Item name="activities" as={NavLink} to="/activities" />
+        <Menu.Item name="Activities" as={NavLink} to="/activities" />
         <Menu.Item>
           <Button
             as={NavLink}

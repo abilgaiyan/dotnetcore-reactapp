@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class activitySeed : Migration
+    public partial class ActivityEntityAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,12 +11,11 @@ namespace Persistence.Migrations
                 name: "Activities",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<Guid>(nullable: false),
                     Title = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Category = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
                     City = table.Column<string>(nullable: true),
                     Venue = table.Column<string>(nullable: true)
                 },
